@@ -2,8 +2,8 @@ import pygame
 pygame.init()
 
 #Set up size of screen
-screenWidth = 800
-screenHeight = 800
+screenWidth = 448
+screenHeight = 576
 screen = pygame.display.set_mode([screenWidth,screenHeight])
 
 running = True
