@@ -11,8 +11,8 @@ from pygame.locals import (
     QUIT,
 )
 
-Screen_Width = 600
-Screen_Height = 600
+Screen_Width = 448
+Screen_Height = 576
 
 class Player(pygame.sprite.Sprite):
     lives = 3
