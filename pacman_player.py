@@ -27,8 +27,8 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self):
         super(Player, self).__init__()
-        self.surf = pygame.Surface((25,25))
-        self.surf.fill((196,180,0))
+        self.surf = pygame.image.load("pacman.png").convert()
+        self.surf.set_colorkey((0,0,0), RLEACCEL)
         self.rect = self.surf.get_rect()
         self.rect.move_ip(Screen_Width/2, Screen_Height/2)
 
