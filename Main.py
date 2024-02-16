@@ -1,10 +1,14 @@
 import pygame
+import player_class
 pygame.init()
+
 
 #Set up size of screen
 screenWidth = 448
 screenHeight = 576
 screen = pygame.display.set_mode([screenWidth,screenHeight])
+
+player = player_class.Player()
 
 running = True
 
@@ -15,14 +19,14 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # Fill the background with white
-    screen.fill((255, 255, 255))
-
-    # Draw a solid blue circle in the center
-    pygame.draw.circle(screen, (0, 0, 255), (250, 250), 75)
-
-    # Flip the display
-    pygame.display.flip()
+    #check for user input
+    pressed_keys = pygame.key.get_pressed()
+    #updates the players position based on user input
+    player.update(pressed_keys)
+    #fills the background as black
+    screen.fill((0,0,0))
+    #puts the player on the screen
+    screen.blit(player.surf, player.rect)
 
 # Done! Time to quit.
 pygame.quit()

@@ -1,9 +1,15 @@
 # Player class
 import pygame
 
-class movable:
-    nothing = 0
-
+from pygame.locals import (
+    K_UP,
+    K_DOWN,
+    K_LEFT,
+    K_RIGHT,
+    K_ESCAPE,
+    KEYDOWN,
+    QUIT,
+)
 
 class Player(pygame.sprite.Sprite):
     lives = 3
@@ -22,7 +28,7 @@ class Player(pygame.sprite.Sprite):
         self.surf.fill((255,255,255))
         self.rect = self.surf.get_rect()
 
-    def update(self):
+    def update(self, pressed_keys):
         if pressed_keys[K_UP]:
             self.rect.move_ip(0, -5)
         if pressed_keys[K_DOWN]:
