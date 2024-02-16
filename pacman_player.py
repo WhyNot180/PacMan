@@ -1,6 +1,7 @@
 # Pac-man Player
 import pygame
 from pygame.locals import (
+    RLEACCEL,
     K_UP,
     K_DOWN,
     K_LEFT,
@@ -27,7 +28,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super(Player, self).__init__()
         self.surf = pygame.Surface((75,25))
-        self.surf.fill((255,255,255))
+        self.surf.fill((255,255,0))
         self.rect = self.surf.get_rect()
 
     def update(self, pressed_keys):
@@ -40,6 +41,17 @@ class Player(pygame.sprite.Sprite):
         if pressed_keys[K_RIGHT]:
             self.rect.move_ip(5, 0)
         
+        # Keep player on the screen
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.right > Screen_Width:
+            self.rect.right = Screen_Width
+        if self.rect.top <= 0:
+            self.rect.top = 0
+        if self.rect.bottom >= Screen_Height:
+            self.rect.bottom = Screen_Height
+            
+        
 pygame.init()
 
 # Set up the window
@@ -48,6 +60,8 @@ screen = pygame.display.set_mode([Screen_Width, Screen_Height])
 player = Player()
 #loops the gmae functions while the game is active
 running = True
+
+clock = pygame.time.Clock()
 
 while running:
     for event in pygame.event.get():
@@ -66,6 +80,8 @@ while running:
     screen.fill((0,0,0))
     #puts the player on the screen
     screen.blit(player.surf, player.rect)
+    # sets the framerate
+    clock.tick(30)
     #updates the screen
     pygame.display.flip()
 
