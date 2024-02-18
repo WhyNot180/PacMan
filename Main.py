@@ -27,6 +27,7 @@ while running:
     screen.fill((0,0,0))
     #puts the player on the screen
     screen.blit(player.surf, player.rect)
+    pygame.display.flip()
 
 # Done! Time to quit.
 pygame.quit()
