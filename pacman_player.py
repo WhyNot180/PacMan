@@ -58,6 +58,8 @@ pygame.init()
 # Set up the window
 screen = pygame.display.set_mode([Screen_Width, Screen_Height])
 
+pygame.display.set_caption('Pac-man')
+
 player = Player()
 #loops the gmae functions while the game is active
 running = True
