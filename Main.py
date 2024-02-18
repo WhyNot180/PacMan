@@ -1,22 +1,30 @@
 import pygame
-import player_class
+import Constants as Const
+import Player
 pygame.init()
+
+from pygame.locals import (
+    K_ESCAPE,
+    KEYDOWN,
+    QUIT
+)
 
 
 #Set up size of screen
-screenWidth = 448
-screenHeight = 576
-screen = pygame.display.set_mode([screenWidth,screenHeight])
+screen = pygame.display.set_mode([Const.screenWidth,Const.screenHeight])
 
-player = player_class.Player()
+pygame.display.set_caption('Pac-man')
+
+clock = pygame.time.Clock()
+
+player = Player.Player()
 
 running = True
 
 while running:
-    
-    # Did the user click the window close button?
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        #stops the program when you close the window        
+        if event.type == QUIT:
             running = False
 
     #check for user input
@@ -27,6 +35,9 @@ while running:
     screen.fill((0,0,0))
     #puts the player on the screen
     screen.blit(player.surf, player.rect)
+    # sets the framerate
+    clock.tick(30)
+    #updates the screen
     pygame.display.flip()
 
 # Done! Time to quit.

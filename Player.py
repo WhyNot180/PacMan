@@ -1,14 +1,12 @@
 # Player class
 import pygame
+import Constants as Const
 
 from pygame.locals import (
     K_UP,
     K_DOWN,
     K_LEFT,
-    K_RIGHT,
-    K_ESCAPE,
-    KEYDOWN,
-    QUIT,
+    K_RIGHT
 )
 
 class Player(pygame.sprite.Sprite):
@@ -24,9 +22,10 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self):
         super(Player, self).__init__()
-        self.surf = pygame.Surface((75,25))
-        self.surf.fill((255,255,255))
+        self.surf = pygame.Surface((25,25))
+        self.surf.fill((196,180,0))
         self.rect = self.surf.get_rect()
+        self.rect.move_ip(Const.screenWidth/2, Const.screenHeight/2)
 
     def update(self, pressed_keys):
         if pressed_keys[K_UP]:
@@ -37,3 +36,13 @@ class Player(pygame.sprite.Sprite):
             self.rect.move_ip(-5, 0)
         if pressed_keys[K_RIGHT]:
             self.rect.move_ip(5, 0)
+
+        # Keep player on the screen
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.right > Const.screenWidth:
+            self.rect.right = Const.screenWidth
+        if self.rect.top <= 0:
+            self.rect.top = 0
+        if self.rect.bottom >= Const.screenHeight:
+            self.rect.bottom = Const.screenHeight
