@@ -34,8 +34,16 @@ class Ghost(pygame.sprite.Sprite):
             self.rect.move_ip(self.speed, 0)
         elif self.direction == 2:
             self.rect.move_ip(-self.speed, 0)
-        if self.rect.right < 0:
-            self.kill()
+
+        # Keep ghost on the screen
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.right > Const.screenWidth:
+            self.rect.right = Const.screenWidth
+        if self.rect.top <= 0:
+            self.rect.top = 0
+        if self.rect.bottom >= Const.screenHeight:
+            self.rect.bottom = Const.screenHeight
     
     def scared(self):
         self.isScared = True
