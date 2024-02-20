@@ -17,8 +17,8 @@ class Player(pygame.sprite.Sprite):
     spawn_y = 0 
     x_position = 0
     y_position = 0
-    # orientation in gradians i.e. up is 4, left is 1, down is 2, right is 3
-    direction = 1
+    # orientation in gradians i.e. up is 4, right is 1, down is 2, left is 3
+    direction = 0
 
     def __init__(self):
         super(Player, self).__init__()
@@ -29,13 +29,23 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, pressed_keys):
         if pressed_keys[K_UP]:
-            self.rect.move_ip(0, -5)
+            self.direction = 4
         if pressed_keys[K_DOWN]:
-            self.rect.move_ip(0, 5)
+            self.direction = 2
         if pressed_keys[K_LEFT]:
-            self.rect.move_ip(-5, 0)
+            self.direction = 3
         if pressed_keys[K_RIGHT]:
+            self.direction = 1
+
+        # Move player in direction they are looking
+        if self.direction == 1:
             self.rect.move_ip(5, 0)
+        if self.direction == 2:
+            self.rect.move_ip(0, 5)
+        if self.direction == 3:
+            self.rect.move_ip(-5, 0)
+        if self.direction == 4:
+            self.rect.move_ip(0, -5)
 
         # Keep player on the screen
         if self.rect.left < 0:
