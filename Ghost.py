@@ -1,11 +1,14 @@
 import pygame
 import random
 import Constants as Const
+from collections import deque as queue
 
 class Ghost(pygame.sprite.Sprite):
 
     isScared : bool
     direction : int
+    row : int = 1
+    column : int = 2
 
     def __init__(self, colour):
         super(Ghost, self).__init__()
@@ -47,3 +50,87 @@ class Ghost(pygame.sprite.Sprite):
     
     def scared(self):
         self.isScared = True
+    
+    def __isVisited(self, visited, row, column):
+        # If cell lies out of bounds
+        if (row < 0 or column < 0 or row >= len(visited) or column >= len(visited[row])):
+            return False
+    
+        # If cell is already visited
+        if (visited[row][column]):
+            return False
+    
+        # Otherwise
+        return True
+    
+    def __search(self, playerColumn, playerRow):
+
+        dRow = [-1, 0, 1, 0]
+        dColumn = [0, -1, 0, 1]
+
+        visited = [[False for i in range(10)] for i in range(3)]
+
+        grid = [[1,2,3,4,5,6,7,8,9,10],
+                [11,12,13,14,15,16,17,18,19,20],
+                [21,22,23,24,25,26,27,28,29,30]]
+
+        totalIterations = 0
+
+        # Stores indices of the matrix cells
+        q = queue()
+
+        prev = queue()
+    
+        # Mark the starting cell as visited
+        # and push it into the queue
+        q.append((self.row, self.column))
+        visited[self.row][self.column] = True
+
+        endX = 2
+        endY = 1
+        reached = False
+        hops = 0
+    
+        # Iterate while the queue
+        # is not empty
+        while ((len(q) > 0) and (not reached)):
+            hops += 1
+            cell = q.popleft()
+            x = cell[0]
+            y = cell[1]
+            print(grid[x][y], end = " ")
+            
+    
+            # Go to the adjacent cells
+            for i in range(4):
+                adjx = x + dRow[i]
+                adjy = y + dColumn[i]
+                if (self.__isVisited(visited, adjx, adjy)):
+                    q.append((adjx, adjy))
+                    visited[adjx][adjy] = True
+                    prev.append((adjx, adjy, hops))
+            
+            if (x == endX and y == endY):
+                    reached = True
+
+        if (reached):
+            print(prev)
+    #TODO: trace path back to start and find direction
+    def __pathTrace(self, path : queue, startX, startY, endX, endY):
+        while ((len(path) > 0) and (not reached)):
+            cell = path.popleft()
+            x = cell[0]
+            y = cell[1]
+            hops = cell[2]
+    
+            # Go to the adjacent cells
+            for i in range(4):
+                adjx = x + dRow[i]
+                adjy = y + dColumn[i]
+                if (self.__isVisited(visited, adjx, adjy)):
+                    q.append((adjx, adjy))
+                    visited[adjx][adjy] = True
+                    previous[adjx][adjy] = hops
+            
+            if (x == endX and y == endY):
+                    reached = True

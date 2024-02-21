@@ -34,6 +34,7 @@ for x in range(5):
 
 running = True
 
+
 while running:
     for event in pygame.event.get():
         #stops the program when you close the window        
