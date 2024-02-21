@@ -13,7 +13,8 @@ pellets = [240]
 points = [0]
 B_pellets = 4
 
-
+class pacman:
+  def __init__(self, x, y, direction, speed, color, size)
 
 class fruit:
   def __init__(self, name, points, x, y):
@@ -70,7 +71,7 @@ def Point_function_Big_pellet():
 
 
 def fruit_function_0():
-  if f0(x, y) == pacman(x, y):
+  if f0(sel.x, self.y) == pacman(self.x, self.y):
     
     points = points + 100
     return points
@@ -85,8 +86,6 @@ def level_switch():
    
 
     
-
-   
 
     
 
