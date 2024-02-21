@@ -80,7 +80,7 @@ def fruit_function():
 def level_switch():
   if pellets == 0:
     
-    print("level" + x)
+    print("level" + )
     
    
 
