@@ -63,7 +63,7 @@ class Ghost(pygame.sprite.Sprite):
         # Otherwise
         return True
     
-    def __search(self, playerColumn, playerRow):
+    def search(self, playerColumn, playerRow):
 
         dRow = [-1, 0, 1, 0]
         dColumn = [0, -1, 0, 1]
@@ -74,8 +74,6 @@ class Ghost(pygame.sprite.Sprite):
                 [11,12,13,14,15,16,17,18,19,20],
                 [21,22,23,24,25,26,27,28,29,30]]
 
-        totalIterations = 0
-
         # Stores indices of the matrix cells
         q = queue()
 
@@ -85,16 +83,11 @@ class Ghost(pygame.sprite.Sprite):
         # and push it into the queue
         q.append((self.row, self.column))
         visited[self.row][self.column] = True
-
-        endX = 2
-        endY = 1
         reached = False
-        hops = 0
     
         # Iterate while the queue
         # is not empty
         while ((len(q) > 0) and (not reached)):
-            hops += 1
             cell = q.popleft()
             x = cell[0]
             y = cell[1]
@@ -108,29 +101,26 @@ class Ghost(pygame.sprite.Sprite):
                 if (self.__isVisited(visited, adjx, adjy)):
                     q.append((adjx, adjy))
                     visited[adjx][adjy] = True
-                    prev.append((adjx, adjy, hops))
+                    prev.append((adjx, adjy, x, y))
             
-            if (x == endX and y == endY):
+            if (x == playerColumn and y == playerRow):
                     reached = True
 
         if (reached):
             print(prev)
-    #TODO: trace path back to start and find direction
-    def __pathTrace(self, path : queue, startX, startY, endX, endY):
-        while ((len(path) > 0) and (not reached)):
-            cell = path.popleft()
-            x = cell[0]
-            y = cell[1]
-            hops = cell[2]
-    
-            # Go to the adjacent cells
-            for i in range(4):
-                adjx = x + dRow[i]
-                adjy = y + dColumn[i]
-                if (self.__isVisited(visited, adjx, adjy)):
-                    q.append((adjx, adjy))
-                    visited[adjx][adjy] = True
-                    previous[adjx][adjy] = hops
+            self.pathTrace(prev)
+    #TODO: find direction
+    def pathTrace(self, path : queue):
+        cell = (0, 0, 0, 0)
+        while ((len(path) > 1)):
+            cell = path.pop()
+            parentX = cell[2]
+            parentY = cell[3]
+
+            currentNode = cell
+
+            while (currentNode[0] != parentY and currentNode[1] != parentX):
+                currentNode = path.pop()
+                print(currentNode)
             
-            if (x == endX and y == endY):
-                    reached = True
+        print(cell, end="L")
