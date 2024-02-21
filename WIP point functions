@@ -1,0 +1,91 @@
+(editing of the functions to fit or change the basis of the fuunction is encouraged)
+
+#fruit = ["cherry", "strawberry", "orange", "apple", "melon"]
+
+#fruit0 = 100 
+#fruit1 = 300
+#fruit2 = 500
+#fruit3 = 700
+#fruit4 = 1000
+
+
+pellets = [240]
+points = [0]
+B_pellets = 4
+
+
+
+class fruit:
+  def __init__(self, name, points, x, y):
+    self.name = name
+    self.points = points
+    self.x = x
+    self.y = y
+
+f0 = fruit("Cherry", 100, x, y)
+f1 = fruit("strawberry", 300, x, y)
+f2 = fruit("orange", 500, x, y)
+f3 = fruit("apple", 700, x, y)
+f4 = fruit("melon", 1000, x, y)
+
+
+
+
+
+
+
+
+def pellet_counter(pellets):
+    if pellets - 1:
+        pellets = pellets - 1 
+        return pellets 
+  
+
+
+
+def Point_function_pellet():
+  global points
+  if pellets - 1:
+    points = points + 10
+    return points
+
+
+def Point_function_Big_pellet():
+  global points 
+  if B_pellets - 1:
+    points = points + 50 
+    return points 
+
+
+
+# WIP may change due to conditions of fruit spawning application
+
+
+#def fruit_function():
+  #global fruit 
+  #if fruit() == "cherry":
+    #if "cherry" - 1:
+      #points = points + 100
+      #return points
+
+
+def fruit_function():
+  global fruit 
+  if fruit() - 1:
+    points = points + 100
+    return points
+    
+
+
+def level_switch():
+  if pellets == 0:
+    
+    print("level" + x)
+    
+   
+
+    
+
+   
+
+    
