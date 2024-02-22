@@ -2,7 +2,7 @@
 import pygame
 
 #Set up size of screen
-screenWidth = 448
+screenWidth = 400
 screenHeight = 576
 screen = pygame.display.set_mode([screenWidth,screenHeight])
 #Set up background
@@ -22,7 +22,7 @@ class Grid:
     def draw(self):
       for i in range(self.columns):
         for j in range(self.rows):
-         pygame.Rect(i * self.width, j * self.width, self.width, self.width)
+         pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(i * self.width, j * self.width, self.width, self.width), 2)
 
 
 #class Border(Fixed_object):

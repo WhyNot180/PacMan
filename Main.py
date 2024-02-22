@@ -1,12 +1,14 @@
 import pygame
+import Map
 pygame.init()
 
 #Set up size of screen
-screenWidth = 448
+screenWidth = 400
 screenHeight = 576
 screen = pygame.display.set_mode([screenWidth,screenHeight])
-
+grid = Grid(40,60,screenWidth / 40)
 running = True
+grid.draw()
 
 while running:
     
