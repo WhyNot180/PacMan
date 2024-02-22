@@ -17,7 +17,7 @@ class Grid:
     def __init__(self, columns, rows, width):
         self.columns = 40
         self.rows = 60
-        self.width = screenWidth / self.columns
+        self.width = round(screenWidth / self.columns) 
       
     def draw(self):
       for i in range(self.columns):

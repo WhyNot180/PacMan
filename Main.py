@@ -3,12 +3,12 @@ import Map
 pygame.init()
 
 #Set up size of screen
-screenWidth = 400
+screenWidth = 448
 screenHeight = 576
 screen = pygame.display.set_mode([screenWidth,screenHeight])
-grid = Grid(40,60,screenWidth / 40)
+grid = Map.Grid(40,60,screenWidth / 40)
 running = True
-grid.draw()
+
 
 while running:
     
@@ -18,10 +18,9 @@ while running:
             running = False
 
     # Fill the background with white
-    screen.fill((255, 255, 255))
-
+    screen.fill((0, 0, 0))
+    grid.draw()
     # Draw a solid blue circle in the center
-    pygame.draw.circle(screen, (0, 0, 255), (250, 250), 75)
 
     # Flip the display
     pygame.display.flip()
