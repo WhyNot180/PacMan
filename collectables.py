@@ -7,7 +7,7 @@ pygame.init()
 DISPLAYSURF = pygame.display.set_mode((500, 500))
 DISPLAYSURF.fill((255, 255, 255))
 
-class collectables(pygame.sprite.Sprite):
+class collectables(pygame.sprite.Sprite, pygame.sprite.Group):
   def __init__(self, position_x, position_y, point_value):
     super().__init__()
     self.image = pygame.Surface([25, 25])
@@ -42,13 +42,20 @@ class power_pellet(collectables):
 test4 = power_pellet(200, 100, 10)
 
 class fruit(collectables):
-    def __init__ (self, position_x, position_y, point_value):
+    def __init__ (self, fruit_type, position_x, position_y, point_value):
       super(). __init__ (position_x, position_y, point_value)
       self.image.fill((0, 0, 200))
+      self.fruit_type = fruit_type
       self.point_value = 100
       self.appear = False
 
-test5 = fruit(250, 100, 10)
+test5 = fruit("cherry", 250, 100, 10)
+print(test5.fruit_type)
+
+all_sprites = pygame.sprite.Group()
+all_sprites.add(test, test2, test3, test4, test5)
+for entity in all_sprites:
+  DISPLAYSURF.blit(entity.image, entity.rect)
 
 pygame.display.set_caption('Hello World!')
 while True:
@@ -56,10 +63,6 @@ while True:
     if event.type == QUIT:
       pygame.quit()
       sys.exit()
-  DISPLAYSURF.blit(test.image, test.rect)
-  DISPLAYSURF.blit(test2.image, test2.rect)
-  DISPLAYSURF.blit(test3.image, test3.rect)
-  DISPLAYSURF.blit(test4.image, test4.rect)
-  DISPLAYSURF.blit(test5.image, test5.rect)
+  
   pygame.display.flip()
-  #pygame.display.update()
+  pygame.display.update()
