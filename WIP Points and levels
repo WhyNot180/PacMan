@@ -61,7 +61,7 @@ n =[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 pellet_list = [pellet(140, 70, 10), pellet(150, 70, 10), pellet(160, 70, 10)]
 power_pellet_list = [power_pellet(200, 100, 10)]
-fruit_list = [fruit(250, 100, 10)]
+fruit_list = [fruit(250, 100, 100), fruit(250, 100, 300)]
 
 def Point_function_pellet():
   global points
