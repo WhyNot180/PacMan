@@ -57,9 +57,11 @@ ________________________________________________________________________________
 
 points = 0
 
+n =[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
 pellet_list = [pellet(140, 70, 10), pellet(150, 70, 10), pellet(160, 70, 10)]
-power_pellet_list = []
-fruit_list = []
+power_pellet_list = [power_pellet(200, 100, 10)]
+fruit_list = [fruit(250, 100, 10)]
 
 def Point_function_pellet():
   global points
@@ -78,5 +80,9 @@ def Point_function_fruit():
   if len(fruit_list) - 1:
       points = points + fruit_list[-1].point_value
       return points
+
+def Level_function():
+  if len(pellet_list) == 0 and len(power_pellet_list) == 0 and len(fruit_list) == 0:
+    print("level" + str(n[0]))
 
     
