@@ -2,8 +2,18 @@
 
 Table of Contents:
 - [Why Make This?](#why-make-this)
+- [Installation](#installation)
 - [Implemented Features](#implemented-features)
 - [How The Code Works](#how-the-code-works)
+    - [Map](#map)
+    - [Player](#player)
+    - [Ghosts](#ghosts)
+    - [Collectables](#collectables)
+    - [Levels](#levels)
+
+## Why Make This?
+
+This replica has been created in order to demonstrate Object-Oriented-Programming. Additionally, this was created partly as a challenge of our programming skills.
 
 ## Installation
 
@@ -26,12 +36,28 @@ Once both are installed you can run the game by typing in the terminal in the fo
 python Main.py
 ```
 
-## Why Make This?
-
-This replica has been created in order to demonstrate Object-Oriented-Programming. Additionally, this was created partly as a challenge of our programming skills.
-
 ## Implemented Features
 
-
+- [x] Player
+- [x] Enemies
+    - [ ] Enemy tracking
+- [x] Collectables
+- [ ] Points
+- [ ] Map
+- [ ] Levels
+- [ ] Appropriate sprites
+- [ ] Gameover
 
 ## How The Code Works
+
+### Map
+
+### Player
+
+### Ghosts
+
+### Collectables
+
+### Levels
+
+Currently WIP
