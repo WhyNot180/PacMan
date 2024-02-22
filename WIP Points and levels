@@ -35,7 +35,7 @@ test3 = pellet(150, 100, 10)
 
 class power_pellet(collectables):
     def __init__ (self, position_x, position_y, point_value):
-      super(). __init__ (position_x, position_y, point_value)
+      super().__init__ (position_x, position_y, point_value)
       self.image.fill((0, 200, 0))
       self.point_value = 50
       self.power_up = False
@@ -44,7 +44,7 @@ test4 = power_pellet(200, 100, 10)
 
 class fruit(collectables):
     def __init__ (self, position_x, position_y, point_value):
-      super(). __init__ (position_x, position_y, point_value)
+      super().__init__ (position_x, position_y, point_value)
       self.image.fill((0, 0, 200))
       self.point_value = 100
       self.appear = False
