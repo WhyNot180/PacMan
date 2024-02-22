@@ -76,7 +76,7 @@ def Point_function_Big_pellet():
 def Point_function_fruit():
   global points
   if len(fruit_list) - 1:
-      points = points + fruit.point_value
-      return points 
+      points = points + fruit_list[-1].point_value
+      return points
 
     
