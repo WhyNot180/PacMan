@@ -1,0 +1,3 @@
+GAMESTART = False
+GAMEOVER = False
+GAMEINIT = True
