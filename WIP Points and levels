@@ -1,86 +1,73 @@
-#fruit = ["cherry", "strawberry", "orange", "apple", "melon"]
+import sys
 
-#fruit0 = 100 
-#fruit1 = 300
-#fruit2 = 500
-#fruit3 = 700
-#fruit4 = 1000
+import pygame
+from pygame.locals import QUIT
 
-
-pellets = 240
-points = 0
-B_pellets = 4
-
-class pacman:
-  def __init__(self, x, y, direction, speed, color, size)
-
-class fruit:
-  def __init__(self, name, points, x, y):
-    self.name = name
-    self.points = points
-    self.x = x
-    self.y = y
-
-f0 = fruit("Cherry", 100, x, y)
-f1 = fruit("strawberry", 300, x, y)
-f2 = fruit("orange", 500, x, y)
-f3 = fruit("apple", 700, x, y)
-f4 = fruit("melon", 1000, x, y)
+pygame.init()
+DISPLAYSURF = pygame.display.set_mode((500, 500))
+DISPLAYSURF.fill((255, 255, 255))
 
 
+class collectables(pygame.sprite.Sprite):
+  def __init__(self, position_x, position_y, point_value):
+    super().__init__()
+    self.image = pygame.Surface([25, 25])
+    self.image.fill((0, 0, 0))
+    self.rect = self.image.get_rect()
+    self.position_x = position_x
+    self.position_y = position_y
+    self.point_value = point_value
+    self.rect.x = position_x
+    self.rect.y = position_y
+
+test = collectables(50, 100, 10)
+test2 = collectables(100, 100, 10)
+
+class pellet(collectables):
+   def __init__ (self, position_x, position_y, point_value):
+     super().__init__(position_x, position_y, point_value)
+     self.image.fill((200, 0, 0))
+     self.point_value = 10
+     self.level_up = False 
+     self.spawn_fruit = False
+
+test3 = pellet(150, 100, 10)
+
+class power_pellet(collectables):
+    def __init__ (self, position_x, position_y, point_value):
+      super(). __init__ (position_x, position_y, point_value)
+      self.image.fill((0, 200, 0))
+      self.point_value = 50
+      self.power_up = False
+
+test4 = power_pellet(200, 100, 10)
+
+class fruit(collectables):
+    def __init__ (self, position_x, position_y, point_value):
+      super(). __init__ (position_x, position_y, point_value)
+      self.image.fill((0, 0, 200))
+      self.point_value = 100
+      self.appear = False
+
+test5 = fruit(250, 100, 10)
 
 
 
 
-
-
-def pellet_counter(pellets):
-    if pellets - 1:
-        pellets = pellets - 1 
-        return pellets 
-  
-
-
+pellet_list = [pellet(140, 70, 10), pellet(150, 70, 10), pellet(160, 70, 10)]
+power_pellet_list = []
+fruit_list = []
 
 def Point_function_pellet():
   global points
-  if pellets - 1:
-    points = points + 10
-    return points
-
+  if len(pellet_list) - 1 :
+      points = points + 10
+      return points
 
 def Point_function_Big_pellet():
   global points 
-  if B_pellets - 1:
-    points = points + 50 
-    return points 
-
-
-
-# WIP may change due to conditions of fruit spawning application
-
-
-#def fruit_function():
-  #global fruit 
-  #if fruit() == "cherry":
-    #if "cherry" - 1:
-      #points = points + 100
-      #return points
-
-#placeholders
-def fruit_function_0():
-  if f0(self.x, self.y) == pacman(self.x, self.y):
-    
-    points = points + 100
-    return points
-    
-
-
-def level_switch():
-  if pellets == 0:
-    
-    print("level" + )
-    
-   
+  if len(power_pellet_list) - 1:
+      points = points + 50 
+      return points
 
     
