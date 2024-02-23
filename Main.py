@@ -3,7 +3,7 @@ import Map
 pygame.init()
 
 #Set up size of screen
-screenWidth = 448
+screenWidth = 455
 screenHeight = 576
 screen = pygame.display.set_mode([screenWidth,screenHeight])
 grid = Map.Grid()
@@ -17,12 +17,14 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # Fill the background with white
+    # Fill the background with black
     screen.fill((0, 0, 0))
+
     grid.drawPattern()
+
+    # Render obstacles
     for obstacle in grid.obstacles:
         screen.blit(obstacle.image, obstacle.rect)
-    # Draw a solid blue circle in the center
 
     # Flip the display
     pygame.display.flip()
