@@ -20,23 +20,18 @@ class Grid:
         self.width = round(screenWidth / self.columns) 
       
     def draw(self):
-      for i in range(self.columns):
-        for j in range(self.rows):
-         pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(i * self.width, j * self.width, self.width, self.width), 2)
+        for i in range(self.columns):
+            for j in range(self.rows):
+                pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(i * self.width, j * self.width, self.width, self.width), 2)
+        self.drawBorder()
 
-
-class Border(Grid):
-   def __init__(self, colour):
-       super().__init__(self.column, self.row)
-   for(let i = 0; i < self.column; i++)
-      let y = i * self.width 
-
-   for(let j = 0; j < self.row; j++)
-      let x = j * self.width
-
-   if (i == 0 || i == self.column - 1 || j == 0 || j == self.row - 1) {
-     pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(i * self.width, j * self.width, self.width, self.width)
-   } 
+    def drawBorder(self):
+        for i in range(self.columns):
+            y = i * self.width 
+            for j in range(self.rows):
+                x = j * self.width
+                if (i == 0 or i == self.columns - 1 or j == 0 or j == self.rows - 1): 
+                    pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(i * self.width, j * self.width, self.width, self.width))
     
 
     #def draw(self):
