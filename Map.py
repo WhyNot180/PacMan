@@ -25,10 +25,19 @@ class Grid:
          pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(i * self.width, j * self.width, self.width, self.width), 2)
 
 
-#class Border(Fixed_object):
-   # def __init__(self, colour):
-      #  super().__init__(self.column, self.row)
-       # self.colour = colour
+class Border(Grid):
+   def __init__(self, colour):
+       super().__init__(self.column, self.row)
+   for(let i = 0; i < self.column; i++)
+      let y = i * self.width 
+
+   for(let j = 0; j < self.row; j++)
+      let x = j * self.width
+
+   if (i == 0 || i == self.column - 1 || j == 0 || j == self.row - 1) {
+     pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(i * self.width, j * self.width, self.width, self.width)
+   } 
+    
 
     #def draw(self):
         
