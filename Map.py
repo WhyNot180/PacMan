@@ -14,34 +14,56 @@ class Fixed_object:
 
 
 class Grid:
-    def __init__(self, columns, rows, width):
-        self.columns = 40
-        self.rows = 60
+
+    obstacles = []
+
+    def __init__(self):
+        self.columns = 11
+        self.rows = 9
         self.width = round(screenWidth / self.columns) 
+        # Initializes map layout: 0 = empty space, 1 = obstacle
+        # Refer to docs for map image
+        self.array = [[0 for i in range(self.columns)],
+                      [0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0],
+                      [0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0],
+                      [0, 0, 0, 0, 1, 1, 1, 0, 0 ,0 ,0],
+                      [0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0],
+                      [0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0],
+                      [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0],
+                      [0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0],
+                      [0 for i in range(self.columns)]]
+        self.createObstacles()
       
-    def draw(self):
-        for i in range(self.columns):
-            for j in range(self.rows):
-                pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(i * self.width, j * self.width, self.width, self.width), 2)
+    def drawPattern(self):
+        # Draws grid
+        # offset for outer border
+        for i in range(self.columns + 2):
+            for j in range(self.rows + 2):
+                # Screen, color, rectangle, border width
+                pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(i * self.width, j * self.width, self.width, self.width), 1)
         self.drawBorder()
 
+
     def drawBorder(self):
-        for i in range(self.columns):
+        for i in range(self.columns + 2):
             y = i * self.width 
-            for j in range(self.rows):
+            for j in range(self.rows + 2):
                 x = j * self.width
-                if (i == 0 or i == self.columns - 1 or j == 0 or j == self.rows - 1): 
+                if (i == 0 or i == self.columns + 1 or j == 0 or j == self.rows + 1): 
                     pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(i * self.width, j * self.width, self.width, self.width))
-    
+    def createObstacles(self):
+        for i in range(self.columns):
+            for j in range(self.rows):
+                if (self.array[j][i] == 1):
+                    self.obstacles.append(Obstacle(self.width, (i + 1) * self.width, (j + 1) * self.width))
 
-    #def draw(self):
-        
 
-
-#class Obstacol(Fixed_object):
-    #def __init__(self, colour):
-       # super().__init__(column, row)
-        #self.colour = colour
+class Obstacle(pygame.sprite.Sprite):
+    def __init__(self, width, x, y):
+        super(Obstacle, self).__init__()
+        self.image = pygame.Surface((width, width))
+        self.image.fill((0, 0, 255))
+        self.rect = self.image.get_rect( topleft = (x,y))
 
 
 

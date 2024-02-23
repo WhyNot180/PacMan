@@ -6,7 +6,7 @@ pygame.init()
 screenWidth = 448
 screenHeight = 576
 screen = pygame.display.set_mode([screenWidth,screenHeight])
-grid = Map.Grid(40,60,screenWidth / 40)
+grid = Map.Grid()
 running = True
 
 
@@ -19,7 +19,9 @@ while running:
 
     # Fill the background with white
     screen.fill((0, 0, 0))
-    grid.draw()
+    grid.drawPattern()
+    for obstacle in grid.obstacles:
+        screen.blit(obstacle.image, obstacle.rect)
     # Draw a solid blue circle in the center
 
     # Flip the display
