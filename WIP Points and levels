@@ -97,8 +97,9 @@ def Level_function():
   if len(pellet_list) == 0 and len(power_pellet_list) == 0 and len(fruit_list) == 0:
     print("level" + str(n[0])) 
 
-
-
+def draw_text(text, font, text_col, x, y):
+  img = font.render(text, True, text_col)
+  screen.blit(img, (x, y))
 
 def score_chart():
   print("score:" + str(points)) 
