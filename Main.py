@@ -1,5 +1,6 @@
 import pygame
 import Constants as Const
+import Map
 import Player
 pygame.init()
 
@@ -17,6 +18,7 @@ pygame.display.set_caption('Pac-man')
 
 clock = pygame.time.Clock()
 
+grid = Map.Grid()
 player = Player.Player()
 
 running = True
@@ -33,6 +35,13 @@ while running:
     player.update(pressed_keys)
     #fills the background as black
     screen.fill((0,0,0))
+
+    grid.drawPattern()
+
+    # Render obstacles
+    for obstacle in grid.obstacles:
+        screen.blit(obstacle.image, obstacle.rect)
+        
     #puts the player on the screen
     screen.blit(player.surf, player.rect)
     # sets the framerate
