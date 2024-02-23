@@ -1,6 +1,7 @@
 import pygame
 import Constants as Const
 import Player
+import collectables as collect
 pygame.init()
 
 from pygame.locals import (
@@ -18,10 +19,14 @@ pygame.display.set_caption('Pac-man')
 clock = pygame.time.Clock()
 
 player = Player.Player()
+pellet = collect.pellet(50,50)
 
 # Sprite rendering group
 allSprites = pygame.sprite.Group()
 allSprites.add(player)
+allSprites.add(pellet)
+
+
 
 running = True
 
@@ -41,7 +46,7 @@ while running:
     for entity in allSprites:
         screen.blit(entity.surf, entity.rect)
     # sets the framerate
-    clock.tick(30)
+    clock.tick(20)
     #updates the screen
     pygame.display.flip()
 
