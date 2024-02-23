@@ -19,6 +19,10 @@ clock = pygame.time.Clock()
 
 player = Player.Player()
 
+# Sprite rendering group
+allSprites = pygame.sprite.Group()
+allSprites.add(player)
+
 running = True
 
 while running:
@@ -34,7 +38,8 @@ while running:
     #fills the background as black
     screen.fill((0,0,0))
     #puts the player on the screen
-    screen.blit(player.surf, player.rect)
+    for entity in allSprites:
+        screen.blit(entity.surf, entity.rect)
     # sets the framerate
     clock.tick(30)
     #updates the screen
