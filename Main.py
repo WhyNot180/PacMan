@@ -20,16 +20,37 @@ pygame.display.set_caption('Pac-man')
 
 clock = pygame.time.Clock()
 
-grid = Map.Grid()
+# Initializes map layout: 0 = empty space, 1 = obstacle
+# Refer to docs for map image
+layout = [[1 for i in range(13)],
+                      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                      [1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1],
+                      [1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1],
+                      [1, 0, 0, 0, 0, 1, 1, 1, 0, 0 ,0 ,0, 1],
+                      [1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1],
+                      [1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1],
+                      [1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1],
+                      [1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1],
+                      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                      [1 for i in range(13)]]
+
+grid = Map.Grid(layout)
 player = Player.Player()
-pellet = collect.pellet(50,50)
+
+collectables = pygame.sprite.Group()
+for i in range(len(layout[0])):
+    for j in range(len(layout)):
+        if layout[j][i] == 0:
+            collect.pellet(i * Const.screenWidth/13 + (Const.screenWidth/13 - 15)/2, j * Const.screenWidth/13 + (Const.screenWidth/13 - 15)/2).add(collectables)
+    
 
 # Sprite rendering group
 allSprites = pygame.sprite.Group()
 allSprites.add(player)
-allSprites.add(pellet)
-
-
+for collectable in collectables:
+    allSprites.add(collectable)
+for obstacle in grid.obstacles:
+    allSprites.add(obstacle)
 
 running = True
 
@@ -48,18 +69,20 @@ while running:
 
     grid.drawPattern()
 
-    # Render obstacles
-    for obstacle in grid.obstacles:
-        screen.blit(obstacle.image, obstacle.rect)
-    
     if pygame.sprite.spritecollideany(player, grid.obstacles):
         player.direction = 0
         player.rect.x = 35 * round(player.rect.x/35)
         player.rect.y = 35 * round(player.rect.y/35)
-        
-    #puts the player on the screen
+    
+    collidingCollectables = pygame.sprite.spritecollide(player, collectables, True)
+    for collectable in collidingCollectables:
+        player.points += collectable.point_value
+        print(player.points)
+
+    #Render sprites
     for entity in allSprites:
         screen.blit(entity.surf, entity.rect)
+    
     # sets the framerate
     clock.tick(20)
     #updates the screen

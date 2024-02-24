@@ -37,13 +37,13 @@ class Player(pygame.sprite.Sprite):
 
         # Move player in direction they are looking
         if self.direction == 1:
-            self.rect.move_ip(10, 0)
+            self.rect.move_ip(5, 0)
         if self.direction == 2:
-            self.rect.move_ip(0, 10)
+            self.rect.move_ip(0, 5)
         if self.direction == 3:
-            self.rect.move_ip(-10, 0)
+            self.rect.move_ip(-5, 0)
         if self.direction == 4:
-            self.rect.move_ip(0, -10)
+            self.rect.move_ip(0, -5)
 
         # Keep player on the screen
         if self.rect.left < 0:

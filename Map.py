@@ -10,23 +10,12 @@ class Grid:
 
     obstacles = []
 
-    def __init__(self):
-        # Initializes map layout: 0 = empty space, 1 = obstacle
-        # Refer to docs for map image
-        self.array = [[1 for i in range(13)],
-                      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-                      [1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1],
-                      [1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1],
-                      [1, 0, 0, 0, 0, 1, 1, 1, 0, 0 ,0 ,0, 1],
-                      [1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1],
-                      [1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1],
-                      [1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1],
-                      [1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1],
-                      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-                      [1 for i in range(13)]]
+    def __init__(self, layout):
         
-        self.rows = len(self.array)
-        self.columns = len(self.array[0])
+        self.layout = layout
+        
+        self.rows = len(self.layout)
+        self.columns = len(self.layout[0])
 
         self.width = round(screenWidth / self.columns) 
         
@@ -43,14 +32,14 @@ class Grid:
     def createObstacles(self):
         for i in range(self.columns):
             for j in range(self.rows):
-                if (self.array[j][i] == 1):
+                if (self.layout[j][i] == 1):
                     self.obstacles.append(Obstacle(self.width, i * self.width, j * self.width))
 
 
 class Obstacle(pygame.sprite.Sprite):
     def __init__(self, width, x, y):
         super(Obstacle, self).__init__()
-        self.image = pygame.Surface((width, width))
-        self.image.fill((0, 0, 255))
-        self.rect = self.image.get_rect( topleft = (x,y))
+        self.surf = pygame.Surface((width, width))
+        self.surf.fill((0, 0, 255))
+        self.rect = self.surf.get_rect( topleft = (x,y))
         

@@ -2,7 +2,7 @@ import pygame
 
 class collectables(pygame.sprite.Sprite):
   def __init__(self, position_x, position_y):
-    pygame.sprite.Sprite.__init__(self)
+    super().__init__()
     self.surf = pygame.Surface([15, 15])
     self.rect = self.surf.get_rect()
     self.position_x = position_x
@@ -12,7 +12,7 @@ class collectables(pygame.sprite.Sprite):
 
 class pellet(collectables):
    point_value = 10
-   def __init__ (self, position_x, position_y):
+   def __init__(self, position_x, position_y):
      super().__init__(position_x, position_y)
      self.surf.fill((255, 255, 255)) 
 
