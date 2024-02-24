@@ -3,6 +3,7 @@ import pygame
 import Constants as Const
 import Map
 import Player
+import collectables as collect
 pygame.init()
 
 from pygame.locals import (
@@ -21,6 +22,14 @@ clock = pygame.time.Clock()
 
 grid = Map.Grid()
 player = Player.Player()
+pellet = collect.pellet(50,50)
+
+# Sprite rendering group
+allSprites = pygame.sprite.Group()
+allSprites.add(player)
+allSprites.add(pellet)
+
+
 
 running = True
 
@@ -49,9 +58,10 @@ while running:
         player.rect.y = 35 * round(player.rect.y/35)
         
     #puts the player on the screen
-    screen.blit(player.surf, player.rect)
+    for entity in allSprites:
+        screen.blit(entity.surf, entity.rect)
     # sets the framerate
-    clock.tick(30)
+    clock.tick(20)
     #updates the screen
     pygame.display.flip()
 
