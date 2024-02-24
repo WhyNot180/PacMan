@@ -1,3 +1,4 @@
+import math
 import pygame
 import Constants as Const
 import Map
@@ -41,6 +42,11 @@ while running:
     # Render obstacles
     for obstacle in grid.obstacles:
         screen.blit(obstacle.image, obstacle.rect)
+    
+    if pygame.sprite.spritecollideany(player, grid.obstacles):
+        player.direction = 0
+        player.rect.x = 35 * round(player.rect.x/35)
+        player.rect.y = 35 * round(player.rect.y/35)
         
     #puts the player on the screen
     screen.blit(player.surf, player.rect)

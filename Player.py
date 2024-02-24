@@ -22,10 +22,9 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self):
         super(Player, self).__init__()
-        self.surf = pygame.Surface((25,25))
+        self.surf = pygame.Surface((Const.screenWidth/13,Const.screenWidth/13))
         self.surf.fill((196,180,0))
-        self.rect = self.surf.get_rect()
-        self.rect.move_ip(Const.screenWidth/2, Const.screenHeight/2)
+        self.rect = self.surf.get_rect(topleft = (6*(Const.screenWidth/13), 6*(Const.screenWidth/13)))
 
     def update(self, pressed_keys):
         if pressed_keys[K_UP]:
