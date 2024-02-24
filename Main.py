@@ -30,7 +30,7 @@ allSprites.add(player)
 for x in range(5):
     ghost = Ghost.Ghost((255,255,255))
     if (x == 0):
-        ghost.search(0,0)
+        print(ghost.pathFind(ghost.direction, ghost.layout))
     enemySprites.add(ghost)
     allSprites.add(ghost)
 
