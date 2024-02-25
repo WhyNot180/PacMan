@@ -40,13 +40,18 @@ python Main.py
 
 - [x] Player
 - [x] Enemies
-    - [ ] Enemy tracking
+    - [x] Enemy tracking
+    - [ ] Enemy personalities
 - [x] Collectables
-- [ ] Points
-- [ ] Map
+    - [x] Pellets
+    - [ ] Power pellets
+    - [ ] Fruits
+- [x] Map
+    - [ ] Switch between multiple map layouts
+    - [ ] Map builder
 - [ ] Levels
 - [ ] Appropriate sprites
-- [ ] Gameover
+- [x] Gameover
 
 ## How The Code Works
 
@@ -57,7 +62,3 @@ python Main.py
 ### Ghosts
 
 ### Collectables
-
-### Levels
-
-Currently WIP
