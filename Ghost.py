@@ -1,6 +1,6 @@
 import pygame
 import random
-import Constants as Const
+import Globals 
 from collections import deque as queue
 
 class Ghost(pygame.sprite.Sprite):
@@ -19,7 +19,7 @@ class Ghost(pygame.sprite.Sprite):
 
     def __init__(self, colour, layout):
         super(Ghost, self).__init__()
-        self.surf = pygame.Surface((Const.gridRatio,Const.gridRatio))
+        self.surf = pygame.Surface((Globals.gridRatio,Globals.gridRatio))
         self.colour = colour
         if self.colour == 'red':
             self.surf.fill((255,0,0))
@@ -33,8 +33,8 @@ class Ghost(pygame.sprite.Sprite):
             self.surf.fill((255,255,255))
         self.rect = self.surf.get_rect(
             topleft=(
-                self.column * Const.gridRatio,
-                self.row * Const.gridRatio,
+                self.column * Globals.gridRatio,
+                self.row * Globals.gridRatio,
             )
         )
 
@@ -44,11 +44,11 @@ class Ghost(pygame.sprite.Sprite):
 
     def update(self, playerX, playerY):
         
-        self.row = round(self.rect.y/Const.gridRatio)
-        self.column = round(self.rect.x/Const.gridRatio)
+        self.row = round(self.rect.y/Globals.gridRatio)
+        self.column = round(self.rect.x/Globals.gridRatio)
 
-        playerRow = round(playerY/Const.gridRatio)
-        playerColumn = round(playerX/Const.gridRatio)
+        playerRow = round(playerY/Globals.gridRatio)
+        playerColumn = round(playerX/Globals.gridRatio)
 
         # if at intersection
         if self.layout[self.row][self.column] == 2:
@@ -66,12 +66,12 @@ class Ghost(pygame.sprite.Sprite):
         # Keep ghost on the screen
         if self.rect.left < 0:
             self.rect.left = 0
-        if self.rect.right > Const.screenWidth:
-            self.rect.right = Const.screenWidth
+        if self.rect.right > Globals.screenWidth:
+            self.rect.right = Globals.screenWidth
         if self.rect.top <= 0:
             self.rect.top = 0
-        if self.rect.bottom >= Const.screenHeight:
-            self.rect.bottom = Const.screenHeight
+        if self.rect.bottom >= Globals.screenHeight:
+            self.rect.bottom = Globals.screenHeight
     
     def __pathFind(self, currentDirection, map, playerColumn, playerRow):
         path = self.__search(playerColumn, playerRow, currentDirection, map)

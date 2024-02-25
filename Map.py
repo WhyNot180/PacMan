@@ -1,6 +1,6 @@
 # map class
 import pygame
-import Constants as Const
+import Globals 
 
 class Grid:
 
@@ -14,7 +14,7 @@ class Grid:
         self.rows = len(self.layout)
         self.columns = len(self.layout[0])
 
-        self.width = round(Const.screenWidth / self.columns) 
+        self.width = round(Globals.screenWidth / self.columns) 
         
         self.createObstacles()
       

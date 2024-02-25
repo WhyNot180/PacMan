@@ -1,6 +1,6 @@
 # Player class
 import pygame
-import Constants as Const
+import Globals 
 
 from pygame.locals import (
     K_UP,
@@ -24,9 +24,9 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self):
         super(Player, self).__init__()
-        self.surf = pygame.Surface((Const.gridRatio,Const.gridRatio))
+        self.surf = pygame.Surface((Globals.gridRatio,Globals.gridRatio))
         self.surf.fill((196,180,0))
-        self.rect = self.surf.get_rect(topleft = (6*Const.gridRatio, 6*Const.gridRatio))
+        self.rect = self.surf.get_rect(topleft = (6*Globals.gridRatio, 6*Globals.gridRatio))
 
     def update(self, pressed_keys):
         # Changes the direction the player is looking
@@ -52,9 +52,9 @@ class Player(pygame.sprite.Sprite):
         # Keep player on the screen
         if self.rect.left < 0:
             self.rect.left = 0
-        if self.rect.right > Const.screenWidth:
-            self.rect.right = Const.screenWidth
+        if self.rect.right > Globals.screenWidth:
+            self.rect.right = Globals.screenWidth
         if self.rect.top <= 0:
             self.rect.top = 0
-        if self.rect.bottom >= Const.screenHeight:
-            self.rect.bottom = Const.screenHeight
+        if self.rect.bottom >= Globals.screenHeight:
+            self.rect.bottom = Globals.screenHeight
