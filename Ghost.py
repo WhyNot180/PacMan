@@ -10,33 +10,37 @@ class Ghost(pygame.sprite.Sprite):
     # 2 is left
     # 3 is up
     # 4 is down
-    direction = 4
+    direction = 1
+    dRow = [0, 0, 1, -1]
+    dColumn = [-1, 1, 0, 0]
     row : int = 3
-    column : int = 4
+    column : int = 6
+    speed = 5
 
-    layout = [[0,0,0,0,0,0,0,0,1],
-              [0,1,1,1,0,1,1,0,0],
-              [0,1,1,0,0,1,0,1,0],
-              [0,0,0,0,0,0,0,0,0],
-              [0,1,1,1,1,1,1,1,0]]
-
-    def __init__(self, colour):
+    def __init__(self, colour, layout):
         super(Ghost, self).__init__()
-        self.surf = pygame.Surface((25,25))
-        self.surf.fill((255,255,255))
+        self.surf = pygame.Surface((Const.gridRatio,Const.gridRatio))
+        self.surf.fill((0,255,0))
         self.rect = self.surf.get_rect(
-            center=(
-                random.randint(Const.screenWidth + 20, Const.screenWidth + 100),
-                random.randint(0, Const.screenHeight),
+            topleft=(
+                self.column * Const.gridRatio,
+                self.row * Const.gridRatio,
             )
         )
-        self.speed = 5
         self.colour = colour
+        self.layout = layout
     # Move the sprite based on speed
     # Remove the sprite when it passes the left edge of the screen
-    def update(self, playerRight):
+    def update(self, playerX, playerY):
         
-        #self.direction = self.pathFind(self.direction, self.layout)
+        self.row = round(self.rect.y/Const.gridRatio)
+        self.column = round(self.rect.x/Const.gridRatio)
+
+        playerRow = round(playerY/Const.gridRatio)
+        playerColumn = round(playerX/Const.gridRatio)
+
+        if self.layout[self.row][self.column] == 2:
+            self.direction = self.pathFind(self.direction, self.layout, playerColumn, playerRow)
         
         if self.direction == 1:
             self.rect.move_ip(self.speed, 0)
@@ -57,22 +61,18 @@ class Ghost(pygame.sprite.Sprite):
         if self.rect.bottom >= Const.screenHeight:
             self.rect.bottom = Const.screenHeight
     
-    def pathFind(self, currentDirection, map):
-        path = self.search(1, 0, currentDirection, map)
-        cell = self.pathTrace(path, 1, 0)
+    def pathFind(self, currentDirection, map, playerColumn, playerRow):
+        path = self.search(playerColumn, playerRow, currentDirection, map)
+        cell = self.pathTrace(path)
         print(cell)
         if cell[0] > self.row:
-            print("hi 4")
             return 4
         elif cell[0] < self.row:
-            print("hi 3")
             return 3
-        elif cell[1] > self.column:
-            print("hi 2")
-            return 1
         elif cell[1] < self.column:
-            print("hi 1")
             return 2
+        elif cell[1] > self.column:
+            return 1
     
     def __isVisited(self, visited, row, column):
         # If cell lies out of bounds
@@ -87,9 +87,6 @@ class Ghost(pygame.sprite.Sprite):
         return True
     
     def search(self, playerColumn, playerRow, currentDirection, map):
-
-        dRow = [0, 0, 1, -1]
-        dColumn = [-1, 1, 0, 0]
 
         visited = [[False for i in range(len(self.layout[0]))] for i in range(len(self.layout))]
 
@@ -110,7 +107,7 @@ class Ghost(pygame.sprite.Sprite):
         # and push it into the queue
         q.append((self.row, self.column))
         visited[self.row][self.column] = True
-        visited[self.row + dRow[currentDirection - 1]][self.column + dColumn[currentDirection - 1]] = True
+        visited[self.row + self.dRow[currentDirection - 1]][self.column + self.dColumn[currentDirection - 1]] = True
         print(visited)
         reached = False
     
@@ -123,8 +120,8 @@ class Ghost(pygame.sprite.Sprite):
             
             # Go to the adjacent cells
             for i in range(4):
-                adjx = x + dRow[i]
-                adjy = y + dColumn[i]
+                adjx = x + self.dRow[i]
+                adjy = y + self.dColumn[i]
                 if (self.__isVisited(visited, adjx, adjy)):
                     q.append((adjx, adjy))
                     visited[adjx][adjy] = True
@@ -138,7 +135,7 @@ class Ghost(pygame.sprite.Sprite):
             return prev
         
     #TODO: find direction
-    def pathTrace(self, path : queue, playerY, playerX):
+    def pathTrace(self, path : queue):
         cell = path.pop()
         while ((len(path) > 1)):
             x = cell[0]

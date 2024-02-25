@@ -30,9 +30,9 @@ class Player(pygame.sprite.Sprite):
         if pressed_keys[K_UP]:
             self.direction = 4
         if pressed_keys[K_DOWN]:
-            self.direction = 2
-        if pressed_keys[K_LEFT]:
             self.direction = 3
+        if pressed_keys[K_LEFT]:
+            self.direction = 2
         if pressed_keys[K_RIGHT]:
             self.direction = 1
 
@@ -40,9 +40,9 @@ class Player(pygame.sprite.Sprite):
         if self.direction == 1:
             self.rect.move_ip(self.speed, 0)
         if self.direction == 2:
-            self.rect.move_ip(0, self.speed)
-        if self.direction == 3:
             self.rect.move_ip(-self.speed, 0)
+        if self.direction == 3:
+            self.rect.move_ip(0, self.speed)
         if self.direction == 4:
             self.rect.move_ip(0, -self.speed)
 
