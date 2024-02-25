@@ -39,6 +39,8 @@ python Main.py
 ## Implemented Features
 
 - [x] Player
+    - [x] Collectable collection
+    - [x] Can be killed by enemies
 - [x] Enemies
     - [x] Enemy tracking
     - [ ] Enemy personalities
@@ -47,6 +49,8 @@ python Main.py
     - [ ] Power pellets
     - [ ] Fruits
 - [x] Map
+    - [ ] Warp tunnels
+    - [ ] Ghost cage
     - [ ] Switch between multiple map layouts
     - [ ] Map builder
 - [ ] Levels
@@ -56,6 +60,20 @@ python Main.py
 ## How The Code Works
 
 ### Map
+
+The map is stored as a 2-D array, where 0 is an empty space, 1 is an obstacle (such as a wall), and 2 is an intersection.
+The original design can be seen below:
+
+![](Docs/Images/Original%20Map.jpg)
+
+The map uses a grid coordinate system in order to place obstacles and help with enemy path-finding. To convert between pixel coordinates and grid coordinates, the pixel coordinates are divided by the grid ratio (tile width) and rounded.
+
+```python
+row = round(y/gridRatio)
+column = round(x/gridRatio)
+```
+
+Using these coordinates as well as the 2-D array, we can use a breadth-first-search to allow the enemies to path-find toward a selected point, as well as automatically place obstacles and pellets in selected places (1 for obstacle, 0 and 2 for pellets).
 
 ### Player
 
