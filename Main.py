@@ -1,6 +1,9 @@
+import math
 import pygame
 import Constants as Const
+import Map
 import Player
+import collectables as collect
 pygame.init()
 
 from pygame.locals import (
@@ -17,11 +20,26 @@ pygame.display.set_caption('Pac-man')
 
 clock = pygame.time.Clock()
 
+grid = Map.Grid(screen, Const.layout)
 player = Player.Player()
+
+collectables = pygame.sprite.Group()
+
+pelletWidthOffset = (Const.gridRatio - collect.pellet.width)/2
+pelletHeightOffset = (Const.gridRatio - collect.pellet.height)/2
+for i in range(len(Const.layout[0])):
+    for j in range(len(Const.layout)):
+        if Const.layout[j][i] == 0:
+            collect.pellet(i * Const.gridRatio + pelletWidthOffset, j * Const.gridRatio + pelletHeightOffset).add(collectables)
+    
 
 # Sprite rendering group
 allSprites = pygame.sprite.Group()
 allSprites.add(player)
+for collectable in collectables:
+    allSprites.add(collectable)
+for obstacle in grid.obstacles:
+    allSprites.add(obstacle)
 
 running = True
 
@@ -37,11 +55,26 @@ while running:
     player.update(pressed_keys)
     #fills the background as black
     screen.fill((0,0,0))
-    #puts the player on the screen
+
+    grid.drawPattern()
+
+    if pygame.sprite.spritecollideany(player, grid.obstacles):
+        player.direction = 0
+        # Set player back to center of nearest tile
+        player.rect.x = Const.gridRatio * round(player.rect.x/Const.gridRatio)
+        player.rect.y = Const.gridRatio * round(player.rect.y/Const.gridRatio)
+    
+    collidingCollectables = pygame.sprite.spritecollide(player, collectables, True)
+    for collectable in collidingCollectables:
+        player.points += collectable.point_value
+        print(player.points)
+
+    #Render sprites
     for entity in allSprites:
         screen.blit(entity.surf, entity.rect)
+    
     # sets the framerate
-    clock.tick(30)
+    clock.tick(20)
     #updates the screen
     pygame.display.flip()
 
