@@ -10,28 +10,39 @@ class Ghost(pygame.sprite.Sprite):
     # 2 is left
     # 3 is up
     # 4 is down
-    direction = 1
+    direction : int 
     dRow = [0, 0, 1, -1]
     dColumn = [-1, 1, 0, 0]
     row : int = 3
     column : int = 6
-    speed = 5
+    speed = 3
 
     def __init__(self, colour, layout):
         super(Ghost, self).__init__()
         self.surf = pygame.Surface((Const.gridRatio,Const.gridRatio))
-        self.surf.fill((0,255,0))
+        self.colour = colour
+        if self.colour == 'red':
+            self.surf.fill((255,0,0))
+        elif self.colour == 'blue':
+            self.surf.fill((0,255,255))
+        elif self.colour == 'pink':
+            self.surf.fill((255,170,255))
+        elif self.colour == 'orange':
+            self.surf.fill((255,170,0))
+        else:
+            self.surf.fill((255,255,255))
         self.rect = self.surf.get_rect(
             topleft=(
                 self.column * Const.gridRatio,
                 self.row * Const.gridRatio,
             )
         )
-        self.colour = colour
+
+        self.direction = random.randint(1,2)
+
         self.layout = layout
-    # Move the sprite based on speed
-    # Remove the sprite when it passes the left edge of the screen
-    def update(self, playerX, playerY):
+
+    def update(self, playerX, playerY, playerDirection):
         
         self.row = round(self.rect.y/Const.gridRatio)
         self.column = round(self.rect.x/Const.gridRatio)
@@ -40,7 +51,7 @@ class Ghost(pygame.sprite.Sprite):
         playerColumn = round(playerX/Const.gridRatio)
 
         if self.layout[self.row][self.column] == 2:
-            self.direction = self.pathFind(self.direction, self.layout, playerColumn, playerRow)
+            self.direction = self.pathFind(self.direction, self.layout, playerColumn, playerRow, playerDirection)
         
         if self.direction == 1:
             self.rect.move_ip(self.speed, 0)
@@ -61,10 +72,15 @@ class Ghost(pygame.sprite.Sprite):
         if self.rect.bottom >= Const.screenHeight:
             self.rect.bottom = Const.screenHeight
     
-    def pathFind(self, currentDirection, map, playerColumn, playerRow):
+    def pathFind(self, currentDirection, map, playerColumn, playerRow, playerDirection):
+        # if self.colour == 'pink':
+        #     path = self.search(playerColumn + 2*self.dColumn[playerDirection-1], playerRow + 2*self.dRow[playerDirection-1], currentDirection, map)
+        # else:
         path = self.search(playerColumn, playerRow, currentDirection, map)
-        cell = self.pathTrace(path)
-        print(cell)
+        if path != None:
+            cell = self.pathTrace(path)
+        else:
+            return currentDirection
         if cell[0] > self.row:
             return 4
         elif cell[0] < self.row:
@@ -108,6 +124,7 @@ class Ghost(pygame.sprite.Sprite):
         q.append((self.row, self.column))
         visited[self.row][self.column] = True
         visited[self.row + self.dRow[currentDirection - 1]][self.column + self.dColumn[currentDirection - 1]] = True
+        print(self.colour)
         print(visited)
         reached = False
     
@@ -130,20 +147,27 @@ class Ghost(pygame.sprite.Sprite):
                         reached = True
                         break
             
-
         if (reached):
             return prev
+        else:
+            return None
         
     #TODO: find direction
     def pathTrace(self, path : queue):
+        print(path)
         cell = path.pop()
         while ((len(path) > 1)):
+            print(cell)
             x = cell[0]
             y = cell[1]
             parentX = cell[2]
             parentY = cell[3]
 
+            if parentX == self.row and parentY == self.column:
+                break
+
             while (x != parentX or y != parentY):
+                print(cell)
                 cell = path.pop()
                 x = cell[0]
                 y = cell[1]

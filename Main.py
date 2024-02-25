@@ -40,10 +40,19 @@ for i in range(len(Const.layout[0])):
 # Sprite rendering group
 allSprites = pygame.sprite.Group()
 allSprites.add(player)
-for x in range(4):
-    ghost = Ghost.Ghost((255,255,255), Const.layout)
-    enemySprites.add(ghost)
-    allSprites.add(ghost)
+
+blinky = Ghost.Ghost('red', Const.layout)
+pinky = Ghost.Ghost('pink', Const.layout)
+inky = Ghost.Ghost('blue', Const.layout)
+clyde = Ghost.Ghost('orange', Const.layout)
+enemySprites.add(blinky)
+allSprites.add(blinky)
+enemySprites.add(pinky)
+allSprites.add(pinky)
+enemySprites.add(inky)
+allSprites.add(inky)
+enemySprites.add(clyde)
+allSprites.add(clyde)
 
 for collectable in collectables:
     allSprites.add(collectable)
@@ -70,7 +79,7 @@ while running:
     player.update(pressed_keys)
 
     for enemy in enemySprites:
-        enemy.update(player.rect.y, player.rect.x)
+        enemy.update(player.rect.y, player.rect.x, player.direction if player.direction > 0 else 1)
         if pygame.sprite.spritecollideany(enemy, grid.obstacles):
             enemy.rect.x = Const.gridRatio * round(enemy.rect.x/Const.gridRatio)
             enemy.rect.y = Const.gridRatio * round(enemy.rect.y/Const.gridRatio)
