@@ -1,6 +1,6 @@
 import pygame
 
-class collectables(pygame.sprite.Sprite):
+class Collectables(pygame.sprite.Sprite):
 
   width = 15
   height = 15
@@ -14,19 +14,19 @@ class collectables(pygame.sprite.Sprite):
     self.rect.x = position_x
     self.rect.y = position_y
 
-class pellet(collectables):
+class pellet(Collectables):
    point_value = 10
    def __init__(self, position_x, position_y):
      super().__init__(position_x, position_y)
      self.surf.fill((255, 255, 255)) 
 
-class power_pellet(collectables):
+class power_pellet(Collectables):
     point_value = 50
     def __init__ (self, position_x, position_y):
       super(). __init__ (position_x, position_y)
       self.surf.fill((0, 200, 0))
 
-class fruit(collectables):
+class fruit(Collectables):
     point_value = 100
     def __init__ (self, position_x, position_y):
       super(). __init__ (position_x, position_y)

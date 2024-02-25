@@ -6,7 +6,7 @@ import Globals
 import Map
 import Player
 import Ghost
-import collectables as collect
+import Collectables as collect
 pygame.init()
 
 from pygame.locals import (

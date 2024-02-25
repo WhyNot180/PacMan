@@ -3,7 +3,7 @@ import Globals
 import Player
 import Map
 import Ghost
-import collectables as collect
+import Collectables as collect
 
 class Game:
     
@@ -16,9 +16,6 @@ class Game:
     
     # Sprite rendering group
     allSprites = pygame.sprite.Group()
-
-    
-    
 
     def __init__(self, screen):
         self.screen = screen
@@ -38,7 +35,7 @@ class Game:
 
         self.allSprites.add(self.player)
         
-        # Reset collectables
+        # Reset Collectables
         pelletWidthOffset = (Globals.gridRatio - collect.pellet.width)/2
         pelletHeightOffset = (Globals.gridRatio - collect.pellet.height)/2
 
@@ -96,7 +93,6 @@ class Game:
         collidingCollectables = pygame.sprite.spritecollide(self.player, self.collectables, True)
         for collectable in collidingCollectables:
             self.player.points += collectable.point_value
-            print(self.player.points)
         
         if pygame.sprite.spritecollideany(self.player, self.enemySprites):
             Globals.GAMESTART = False

@@ -10,11 +10,7 @@ from pygame.locals import (
 )
 
 class Player(pygame.sprite.Sprite):
-    lives = 3
     points = 0
-    powered_up = False
-    spawn_x = 0
-    spawn_y = 0
     # 1 is right
     # 2 is left
     # 3 is up
