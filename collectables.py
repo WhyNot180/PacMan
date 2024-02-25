@@ -1,9 +1,13 @@
 import pygame
 
 class collectables(pygame.sprite.Sprite):
+
+  width = 15
+  height = 15
+
   def __init__(self, position_x, position_y):
     super().__init__()
-    self.surf = pygame.Surface([15, 15])
+    self.surf = pygame.Surface([self.width, self.height])
     self.rect = self.surf.get_rect()
     self.position_x = position_x
     self.position_y = position_y
