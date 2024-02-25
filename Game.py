@@ -17,6 +17,9 @@ class Game:
     # Sprite rendering group
     allSprites = pygame.sprite.Group()
 
+    
+    
+
     def __init__(self, screen):
         self.screen = screen
         self.grid = Map.Grid(self.screen, Globals.layout)
@@ -109,6 +112,21 @@ class Game:
         #Render sprites
         for entity in self.allSprites:
             self.screen.blit(entity.surf, entity.rect)
+        
+        font = pygame.font.SysFont('arial', 32)
+
+        scoreText = font.render('Points:', True, (255, 255, 255))
+
+        displayedPoints = font.render(str(self.player.points), True, (255, 255, 255))
+
+        scoreTextRect = scoreText.get_rect()
+        displayedPointsRect = displayedPoints.get_rect()
+
+        scoreTextRect.topleft = (50, 500)
+        displayedPointsRect.topleft = (200, 500)
+
+        self.screen.blit(scoreText, scoreTextRect)
+        self.screen.blit(displayedPoints, displayedPointsRect)
 
 
     def play(self, pressed_keys):

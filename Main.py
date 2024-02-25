@@ -25,8 +25,6 @@ clock = pygame.time.Clock()
 
 pacMan = Game.Game(screen)
 
-running = True
-
 font = pygame.font.SysFont('arial', 32)
 
 gameOverText = font.render('Game Over', True, (255, 0, 0))
@@ -42,6 +40,8 @@ pressPlayTextRect.topleft = (50, 450)
 # Initialize
 screen.blit(pressPlayText, pressPlayTextRect)
 pacMan.reset()
+
+running = True
 
 while running:
 
