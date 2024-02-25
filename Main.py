@@ -79,7 +79,7 @@ while running:
     player.update(pressed_keys)
 
     for enemy in enemySprites:
-        enemy.update(player.rect.y, player.rect.x, player.direction if player.direction > 0 else 1)
+        enemy.update(player.rect.y, player.rect.x)
         if pygame.sprite.spritecollideany(enemy, grid.obstacles):
             enemy.rect.x = Const.gridRatio * round(enemy.rect.x/Const.gridRatio)
             enemy.rect.y = Const.gridRatio * round(enemy.rect.y/Const.gridRatio)

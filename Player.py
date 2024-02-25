@@ -15,7 +15,10 @@ class Player(pygame.sprite.Sprite):
     powered_up = False
     spawn_x = 0
     spawn_y = 0
-    # orientation in gradians i.e. up is 4, right is 1, down is 2, left is 3
+    # 1 is right
+    # 2 is left
+    # 3 is up
+    # 4 is down
     direction = 0
     speed = 5
 

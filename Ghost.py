@@ -5,12 +5,12 @@ from collections import deque as queue
 
 class Ghost(pygame.sprite.Sprite):
 
-    isScared : bool
     # 1 is right
     # 2 is left
     # 3 is up
     # 4 is down
     direction : int 
+    # Direction helpers (e.g. if going right then the previous tile is 1 column left and 0 rows away)
     dRow = [0, 0, 1, -1]
     dColumn = [-1, 1, 0, 0]
     row : int = 3
@@ -42,7 +42,7 @@ class Ghost(pygame.sprite.Sprite):
 
         self.layout = layout
 
-    def update(self, playerX, playerY, playerDirection):
+    def update(self, playerX, playerY):
         
         self.row = round(self.rect.y/Const.gridRatio)
         self.column = round(self.rect.x/Const.gridRatio)
@@ -50,8 +50,9 @@ class Ghost(pygame.sprite.Sprite):
         playerRow = round(playerY/Const.gridRatio)
         playerColumn = round(playerX/Const.gridRatio)
 
+        # if at intersection
         if self.layout[self.row][self.column] == 2:
-            self.direction = self.pathFind(self.direction, self.layout, playerColumn, playerRow, playerDirection)
+            self.direction = self.__pathFind(self.direction, self.layout, playerColumn, playerRow)
         
         if self.direction == 1:
             self.rect.move_ip(self.speed, 0)
@@ -72,13 +73,10 @@ class Ghost(pygame.sprite.Sprite):
         if self.rect.bottom >= Const.screenHeight:
             self.rect.bottom = Const.screenHeight
     
-    def pathFind(self, currentDirection, map, playerColumn, playerRow, playerDirection):
-        # if self.colour == 'pink':
-        #     path = self.search(playerColumn + 2*self.dColumn[playerDirection-1], playerRow + 2*self.dRow[playerDirection-1], currentDirection, map)
-        # else:
-        path = self.search(playerColumn, playerRow, currentDirection, map)
+    def __pathFind(self, currentDirection, map, playerColumn, playerRow):
+        path = self.__search(playerColumn, playerRow, currentDirection, map)
         if path != None:
-            cell = self.pathTrace(path)
+            cell = self.__pathTrace(path)
         else:
             return currentDirection
         if cell[0] > self.row:
@@ -102,7 +100,7 @@ class Ghost(pygame.sprite.Sprite):
         # Otherwise
         return True
     
-    def search(self, playerColumn, playerRow, currentDirection, map):
+    def __search(self, playerColumn, playerRow, currentDirection, map):
 
         visited = [[False for i in range(len(self.layout[0]))] for i in range(len(self.layout))]
 
@@ -115,23 +113,21 @@ class Ghost(pygame.sprite.Sprite):
         
 
         # Stores indices of the matrix cells
-        q = queue()
+        validCells = queue()
 
-        prev = queue()
+        path = queue()
 
-        # Mark the starting cell as visited
-        # and push it into the queue
-        q.append((self.row, self.column))
+        # Mark the starting cell as visited and add to queue
+        validCells.append((self.row, self.column))
         visited[self.row][self.column] = True
+
+        # Mark cell behind as visited to prevent reverse movement
         visited[self.row + self.dRow[currentDirection - 1]][self.column + self.dColumn[currentDirection - 1]] = True
-        print(self.colour)
-        print(visited)
+
         reached = False
     
-        # Iterate while the queue
-        # is not empty
-        while ((len(q) > 0) and (not reached)):
-            cell = q.popleft()
+        while ((len(validCells) > 0) and (not reached)):
+            cell = validCells.popleft()
             x = cell[0]
             y = cell[1]
             
@@ -139,27 +135,27 @@ class Ghost(pygame.sprite.Sprite):
             for i in range(4):
                 adjx = x + self.dRow[i]
                 adjy = y + self.dColumn[i]
+
                 if (self.__isVisited(visited, adjx, adjy)):
-                    q.append((adjx, adjy))
+                    validCells.append((adjx, adjy))
                     visited[adjx][adjy] = True
-                    prev.append((adjx, adjy, x, y))
+                    path.append((adjx, adjy, x, y))
+
                 if (adjx == playerColumn and adjy == playerRow):
                         reached = True
                         break
             
         if (reached):
-            return prev
+            return path
         else:
             return None
         
-    #TODO: find direction
-    def pathTrace(self, path : queue):
-        print(path)
+    # Trace back the path
+    def __pathTrace(self, path : queue):
         cell = path.pop()
+        x = cell[0]
+        y = cell[1]
         while ((len(path) > 1)):
-            print(cell)
-            x = cell[0]
-            y = cell[1]
             parentX = cell[2]
             parentY = cell[3]
 
@@ -167,7 +163,6 @@ class Ghost(pygame.sprite.Sprite):
                 break
 
             while (x != parentX or y != parentY):
-                print(cell)
                 cell = path.pop()
                 x = cell[0]
                 y = cell[1]
