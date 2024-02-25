@@ -4,7 +4,7 @@ Table of Contents:
 - [Why Make This?](#why-make-this)
 - [Installation](#installation)
 - [Implemented Features](#implemented-features)
-- [How The Code Works](#how-the-code-works)
+- [How The Game Works](#how-the-game-works)
     - [Map](#map)
     - [Player](#player)
     - [Ghosts](#ghosts)
@@ -57,7 +57,7 @@ python Main.py
 - [ ] Appropriate sprites
 - [x] Gameover
 
-## How The Code Works
+## How The Game Works
 
 ### Map
 
@@ -80,5 +80,11 @@ Using these coordinates as well as the 2-D array, we can use a breadth-first-sea
 The player is currently represented by controllable orange square. The player moves in a set direction until it hits a wall or the arrow keys are pressed, changing its direction. The player is also able to collide with enemies, restarting the game, and pellets, earning points.
 
 ### Ghosts
+
+The ghosts are currently represented as coloured squares. They move similarly to the player, in a set direction until told otherwise.
+
+At each intersection (represented as a 2 on the map array) they begin a breadth-first-search (BFS) in an attempt to find the player, they then trace the shortest path back in order to find the direction they must turn. 
+
+Once a ghost collides with a player, the game restarts.
 
 ### Collectables
