@@ -27,6 +27,22 @@ pacMan = Game.Game(screen)
 
 running = True
 
+font = pygame.font.SysFont('arial', 32)
+
+gameOverText = font.render('Game Over', True, (255, 0, 0))
+
+pressPlayText = font.render('Press Any Button To Start', True, (0, 255, 0))
+
+gameOverTextRect = gameOverText.get_rect()
+pressPlayTextRect = pressPlayText.get_rect()
+
+gameOverTextRect.topleft = (50, 400)
+pressPlayTextRect.topleft = (50, 450)
+
+# Initialize
+screen.blit(pressPlayText, pressPlayTextRect)
+pacMan.reset()
+
 while running:
 
     # Did the user click the window close button?
@@ -42,7 +58,9 @@ while running:
 
     if Globals.GAMESTART:
         pacMan.play(pressed_keys)
-    elif Globals.GAMEOVER or Globals.GAMEINIT:
+    elif Globals.GAMEOVER:
+        screen.blit(gameOverText, gameOverTextRect)
+        screen.blit(pressPlayText, pressPlayTextRect)
         pacMan.reset()
     
     # sets the framerate
