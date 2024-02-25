@@ -88,3 +88,6 @@ At each intersection (represented as a 2 on the map array) they begin a breadth-
 Once a ghost collides with a player, the game restarts.
 
 ### Collectables
+
+Pellets are currently represented as small white squares.
+They are placed on every empty tile or intersection at the start of the game, and are removed from the screen when colliding with the player, providing points in the process. 
