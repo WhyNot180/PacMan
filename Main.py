@@ -1,27 +1,71 @@
+import math
 import pygame
+import Game
+import Globals
+import Globals 
+import Map
+import Player
+import Ghost
+import Collectables as collect
 pygame.init()
 
+from pygame.locals import (
+    K_ESCAPE,
+    KEYDOWN,
+    QUIT
+)
+
+
 #Set up size of screen
-screenWidth = 448
-screenHeight = 576
-screen = pygame.display.set_mode([screenWidth,screenHeight])
+screen = pygame.display.set_mode([Globals.screenWidth,Globals.screenHeight])
+
+pygame.display.set_caption('Pac-man')
+
+clock = pygame.time.Clock()
+
+pacMan = Game.Game(screen)
+
+font = pygame.font.SysFont('arial', 32)
+
+gameOverText = font.render('Game Over', True, (255, 0, 0))
+
+pressPlayText = font.render('Press Any Button To Start', True, (0, 255, 0))
+
+gameOverTextRect = gameOverText.get_rect()
+pressPlayTextRect = pressPlayText.get_rect()
+
+gameOverTextRect.topleft = (50, 400)
+pressPlayTextRect.topleft = (50, 450)
+
+# Initialize
+screen.blit(pressPlayText, pressPlayTextRect)
+pacMan.reset()
 
 running = True
 
 while running:
-    
+
     # Did the user click the window close button?
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        #stops the program when you close the window        
+        if event.type == QUIT:
             running = False
+        # Starts game if and key is pressed
+        elif event.type == pygame.KEYDOWN:
+            Globals.GAMESTART = True
+    #check for user input
+    pressed_keys = pygame.key.get_pressed()
 
-    # Fill the background with white
-    screen.fill((255, 255, 255))
-
-    # Draw a solid blue circle in the center
-    pygame.draw.circle(screen, (0, 0, 255), (250, 250), 75)
-
-    # Flip the display
+    if Globals.GAMESTART:
+        pacMan.play(pressed_keys)
+    elif Globals.GAMEOVER:
+        screen.blit(gameOverText, gameOverTextRect)
+        screen.blit(pressPlayText, pressPlayTextRect)
+        pacMan.reset()
+    
+    # sets the framerate
+    clock.tick(20)
+    #updates the screen
     pygame.display.flip()
 
 # Done! Time to quit.
