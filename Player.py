@@ -15,7 +15,10 @@ class Player(pygame.sprite.Sprite):
     powered_up = False
     spawn_x = 0
     spawn_y = 0
-    # orientation in gradians i.e. up is 4, right is 1, down is 2, left is 3
+    # 1 is right
+    # 2 is left
+    # 3 is up
+    # 4 is down
     direction = 0
     speed = 5
 
@@ -30,9 +33,9 @@ class Player(pygame.sprite.Sprite):
         if pressed_keys[K_UP]:
             self.direction = 4
         if pressed_keys[K_DOWN]:
-            self.direction = 2
-        if pressed_keys[K_LEFT]:
             self.direction = 3
+        if pressed_keys[K_LEFT]:
+            self.direction = 2
         if pressed_keys[K_RIGHT]:
             self.direction = 1
 
@@ -40,9 +43,9 @@ class Player(pygame.sprite.Sprite):
         if self.direction == 1:
             self.rect.move_ip(self.speed, 0)
         if self.direction == 2:
-            self.rect.move_ip(0, self.speed)
-        if self.direction == 3:
             self.rect.move_ip(-self.speed, 0)
+        if self.direction == 3:
+            self.rect.move_ip(0, self.speed)
         if self.direction == 4:
             self.rect.move_ip(0, -self.speed)
 
