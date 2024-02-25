@@ -77,6 +77,8 @@ Using these coordinates as well as the 2-D array, we can use a breadth-first-sea
 
 ### Player
 
+The player is currently represented by controllable orange square. The player moves in a set direction until it hits a wall or the arrow keys are pressed, changing its direction. The player is also able to collide with enemies, restarting the game, and pellets, earning points.
+
 ### Ghosts
 
 ### Collectables
